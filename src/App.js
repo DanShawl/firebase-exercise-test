@@ -18,6 +18,7 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { db, auth } from './firebase';
+import Dashboard from './components/Dashboard';
 
 function App() {
   //  user authentication state
@@ -46,6 +47,9 @@ function App() {
 
   //  dan@dan.com
   //  helloworld
+
+  //  TheWeeknd
+  //  theweeknd@weeknd.com
   const handleSignIn = (e) => {
     clearErrors();
     e.preventDefault();
@@ -115,10 +119,7 @@ function App() {
   }, []);
 
   const [clients, setClients] = useState([]);
-  // const [client, setClient] = useState({});
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+
   const [currentClient, setCurrentClient] = useState('');
 
   useEffect(() => {
@@ -133,61 +134,6 @@ function App() {
       );
     });
   }, []);
-  // console.log(userList);
-
-  // useEffect(() => {
-  //   onSnapshot(collection(db, 'clients'), (snapshot) => {
-  //     setClients(
-  //       snapshot.docs.map((doc) => ({
-  //         id: doc.id,
-  //         client: doc.data(),
-  //         // firstName: doc.data().eval.firstName,
-  //         // lastName: doc.data().eval.lastName,
-  //       }))
-  //     );
-  //   });
-  // }, []);
-
-  useEffect(() => {
-    if (currentUser) {
-      onSnapshot(collection(db, `users/${currentUser}/clients`), (snapshot) => {
-        setClients(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            client: doc.data(),
-            // firstName: doc.data().eval.firstName,
-            // lastName: doc.data().eval.lastName,
-          }))
-        );
-      });
-    }
-  }, [currentUser]);
-
-  //  creates a new client with the path clients/newID
-  const addClient = (e) => {
-    e.preventDefault();
-    // const clientListRef = collection(db, 'clients');
-    const clientListRef = collection(db, `users/${currentUser}/clients`);
-    let newFirstName = firstName.toLowerCase();
-    let newLastName = lastName.toLowerCase();
-    let newID = `${newFirstName}_${newLastName}`;
-
-    setDoc(doc(clientListRef, newID), {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-    });
-
-    //  adds client with auto id
-    // addDoc(clientListRef, {
-    //   firstName: firstName,
-    //   lastName: lastName,
-    //   email: email,
-    // });
-    setEmail('');
-    setFirstName('');
-    setLastName('');
-  };
 
   const addWorkout = (e) => {
     e.preventDefault();
@@ -236,46 +182,8 @@ function App() {
           setUsername={setUsername}
         />
       )}
-      {/* Some info */}
-      {/* <div className="signIn">
-        <div className="signIn__container">
-          <h1>Sign In</h1>
-          <form action=""></form>
-        </div>
-      </div> */}
-      <div>
-        {clients.map(({ id, client }) => (
-          <div onClick={(e) => setCurrentClient(id)}>
-            <h1>{client.firstName}</h1>
-          </div>
-        ))}
-      </div>
-      <form action="">
-        <input
-          type="text"
-          placeholder="First Name"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button
-          onClick={addClient}
-          disabled={!firstName || !lastName || !email}
-        >
-          Add Client
-        </button>
-      </form>
+      <Dashboard currentUser={currentUser} />
+
       <form action="">
         <button onClick={addWorkout}>add workout</button>
       </form>

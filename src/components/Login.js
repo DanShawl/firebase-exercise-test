@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './Login.css';
 const Login = ({
   email,
   setEmail,
@@ -17,14 +17,23 @@ const Login = ({
   return (
     <section className="login">
       <div className="login__container">
-        <label>Username</label>
-        <input
-          type="text"
-          autoFocus
-          required
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        {!hasAccount && (
+          <input
+            type="text"
+            autoFocus
+            required
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        )}
+        {/* <input
+            type="text"
+            autoFocus
+            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          /> */}
         <label>Email</label>
         <input
           type="text"
@@ -45,26 +54,45 @@ const Login = ({
         <div className="btn__container">
           {hasAccount ? (
             <>
-              <button onClick={handleSignIn}>Sign In</button>
+              <button
+                className="btn__signIn"
+                onClick={handleSignIn}
+                disabled={!password || !email}
+              >
+                Sign In
+              </button>
               <p>
                 Don't have an account?{' '}
-                <span onClick={() => setHasAccount(!hasAccount)}>Sign up</span>
+                <span
+                  className="btn__swap"
+                  onClick={() => setHasAccount(!hasAccount)}
+                >
+                  Sign up
+                </span>
               </p>
             </>
           ) : (
             <>
-              <button onClick={handleSignUp}>Sign Up</button>
+              <button
+                className="btn__signIn"
+                onClick={handleSignUp}
+                disabled={!username || !password || !email}
+              >
+                Sign Up
+              </button>
               <p>
                 Have an account?{' '}
-                <span onClick={() => setHasAccount(!hasAccount)}>Sign in</span>
+                <span
+                  className="btn__swap"
+                  onClick={() => setHasAccount(!hasAccount)}
+                >
+                  Sign in
+                </span>
               </p>
             </>
           )}
         </div>
       </div>
-      {/*  */}
-
-      {/*  */}
     </section>
   );
 };

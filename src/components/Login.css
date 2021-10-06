@@ -1,0 +1,39 @@
+.login {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login__container {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+}
+
+.btn__container {
+  /* width: 100%; */
+}
+
+input {
+  margin-bottom: 1em;
+}
+
+.btn__signIn {
+  border: none;
+  width: 100%;
+  padding: 0.5em 0;
+  margin-bottom: 0.5em;
+  cursor: pointer;
+  background-color: rgb(64, 138, 248);
+  color: white;
+  border-radius: 3px;
+}
+
+.btn__signIn:hover {
+  background-color: rgb(25, 114, 248);
+}
+
+.btn__swap {
+  color: rgb(64, 138, 248);
+  cursor: pointer;
+}

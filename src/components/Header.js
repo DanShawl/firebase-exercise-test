@@ -18,62 +18,11 @@ const Header = ({ handleLogout, currentUser }) => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
 
-  // useEffect(() => {
-  //   const colRef = collection(db, 'users');
-  //   console.log(colRef);
-  //   const userRef = doc(colRef, `${currentUser}`);
-  //   console.log(userRef);
-  // }, []);
-
-  // const addClient = (e) => {
-  //   e.preventDefault();
-  //   const clientListRef = collection(db, `users/${currentUser}/clients`);
-
-  //   let newFirstName = firstName.toLowerCase();
-  //   let newLastName = lastName.toLowerCase();
-  //   let newID = `${newFirstName}_${newLastName}`;
-
-  //   setDoc(doc(clientListRef, newID), {
-  //     firstName: firstName,
-  //     lastName: lastName,
-  //     email: email,
-  //   });
-  // };
-  // const [currentClient, setCurrentClient] = useState('');
-
-  // useEffect(() => {
-  //   onSnapshot(collection(db, `users/${currentUser}/clients`), (snapshot) => {
-  //     setClients(
-  //       snapshot.docs.map((doc) => ({
-  //         id: doc.id,
-  //         client: doc.data(),
-  //         // firstName: doc.data().eval.firstName,
-  //         // lastName: doc.data().eval.lastName,
-  //       }))
-  //     );
-  //   });
-  // }, []);
-
-  // //  creates a new client with the path clients/newID
-  // const addClient = (e) => {
-  //   e.preventDefault();
-  //   const clientListRef = collection(db, `users/${currentUser}/clients`);
-
-  //   let newFirstName = firstName.toLowerCase();
-  //   let newLastName = lastName.toLowerCase();
-  //   let newID = `${newFirstName}_${newLastName}`;
-
-  //   setDoc(doc(clientListRef, newID), {
-  //     firstName: firstName,
-  //     lastName: lastName,
-  //     email: email,
-  //   });
-
   return (
     <div>
       <section className="header">
         <nav>
-          <h2>Welcome</h2>
+          {/* <h2>Current Clients</h2> */}
           <button onClick={handleLogout}>Logout</button>
         </nav>
       </section>
@@ -109,3 +58,54 @@ const Header = ({ handleLogout, currentUser }) => {
 };
 
 export default Header;
+
+// useEffect(() => {
+//   const colRef = collection(db, 'users');
+//   console.log(colRef);
+//   const userRef = doc(colRef, `${currentUser}`);
+//   console.log(userRef);
+// }, []);
+
+// const addClient = (e) => {
+//   e.preventDefault();
+//   const clientListRef = collection(db, `users/${currentUser}/clients`);
+
+//   let newFirstName = firstName.toLowerCase();
+//   let newLastName = lastName.toLowerCase();
+//   let newID = `${newFirstName}_${newLastName}`;
+
+//   setDoc(doc(clientListRef, newID), {
+//     firstName: firstName,
+//     lastName: lastName,
+//     email: email,
+//   });
+// };
+// const [currentClient, setCurrentClient] = useState('');
+
+// useEffect(() => {
+//   onSnapshot(collection(db, `users/${currentUser}/clients`), (snapshot) => {
+//     setClients(
+//       snapshot.docs.map((doc) => ({
+//         id: doc.id,
+//         client: doc.data(),
+//         // firstName: doc.data().eval.firstName,
+//         // lastName: doc.data().eval.lastName,
+//       }))
+//     );
+//   });
+// }, []);
+
+// //  creates a new client with the path clients/newID
+// const addClient = (e) => {
+//   e.preventDefault();
+//   const clientListRef = collection(db, `users/${currentUser}/clients`);
+
+//   let newFirstName = firstName.toLowerCase();
+//   let newLastName = lastName.toLowerCase();
+//   let newID = `${newFirstName}_${newLastName}`;
+
+//   setDoc(doc(clientListRef, newID), {
+//     firstName: firstName,
+//     lastName: lastName,
+//     email: email,
+//   });
