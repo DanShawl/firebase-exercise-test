@@ -32,7 +32,42 @@ const Dashboard = ({ currentUser }) => {
       });
     }
   }, [currentUser]);
-  console.log(clients);
+
+  const colorList = [
+    {
+      bgColor: 'CCCCFF',
+      color: '7575ff',
+    },
+    {
+      bgColor: 'ADD8E6',
+      color: '509ab3',
+    },
+    {
+      bgColor: '96DED1',
+      color: '37b19a',
+    },
+    {
+      bgColor: '9FE2BF',
+      color: '3cac72',
+    },
+    {
+      bgColor: 'DAA06D',
+      color: '7a4414',
+    },
+    {
+      bgColor: 'e9947a',
+      color: 'af3a16',
+    },
+    {
+      bgColor: 'C2B280',
+      color: '6d5716',
+    },
+  ];
+
+  const getRandomNum = () => {
+    let randomNum = Math.floor(Math.random() * colorList.length);
+    return randomNum;
+  };
 
   //  creates a new client with the path clients/newID
   const addClient = (e) => {
@@ -43,10 +78,15 @@ const Dashboard = ({ currentUser }) => {
     let newLastName = lastName.toLowerCase();
     let newID = `${newFirstName}_${newLastName}`;
 
+    let themeNumber = getRandomNum();
+
     setDoc(doc(clientListRef, newID), {
       firstName: firstName,
       lastName: lastName,
       email: email,
+
+      color: colorList[themeNumber].color,
+      bgColor: colorList[themeNumber].bgColor,
     });
 
     //  adds client with auto id
@@ -58,12 +98,13 @@ const Dashboard = ({ currentUser }) => {
     setEmail('');
     setFirstName('');
     setLastName('');
+    setOpenModal(false);
   };
 
   return (
-    <div>
+    <div className="dashboard">
       <header>
-        <h1>Current Clients</h1>
+        <h1>Clients</h1>
         <button className="btn__addClient" onClick={() => setOpenModal(true)}>
           Add Client
         </button>
@@ -84,13 +125,35 @@ const Dashboard = ({ currentUser }) => {
       <div>
         <ul>
           {clients.map(({ id, client }) => (
-            <li onClick={(e) => setCurrentClient(id)}>
-              <button>
-                {client.firstName} {client.lastName}
-              </button>
-              {/* <h3>
-              {client.firstName} {client.lastName}
-            </h3> */}
+            <li className="client__item" onClick={(e) => setCurrentClient(id)}>
+              <div className="client__itemContainer">
+                <div className="client__itemTop">
+                  <div className="client__itemTitle">
+                    <div className="client__avatar">
+                      <p className="client__initials">
+                        {client.firstName[0]}
+                        {client.lastName[0]}
+                      </p>
+                    </div>
+                    <h2 className="client__name">
+                      {client.firstName} {client.lastName}
+                    </h2>
+                  </div>
+                  <div className="client__options">
+                    <h6>-</h6>
+                  </div>
+                </div>
+                <div className="client__itemBottom">
+                  <div className="client__dx">
+                    <p className="dx__title">Diagnosis</p>
+                    <p className="dx__name">Patellar Tendonopathy</p>
+                  </div>
+                  <div className="client__sessions">
+                    <p className="session__title">Last Session</p>
+                    <p className="session__num">Oct. 5, 2021</p>
+                  </div>
+                </div>
+              </div>
             </li>
           ))}
         </ul>
@@ -112,3 +175,18 @@ const Dashboard = ({ currentUser }) => {
 };
 
 export default Dashboard;
+
+//  #CCCCFF / #7575ff
+
+//  #ADD8E6 / #509ab3
+
+//  #96DED1
+//  #9FE2BF
+//  #DAA06D
+//  #E97451
+//  #C2B280
+//  #F2D2BD
+//  #C2B280
+//  #B2BEB5
+//  #FFD580
+//  #FFE5B4

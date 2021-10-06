@@ -1,8 +1,118 @@
+.dashboard {
+  /* margin: 1em; */
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  padding: 0 1.5em;
+  border-bottom: 1px solid rgb(207, 207, 207);
+  margin-bottom: 1em;
+}
+
 .btn__addClient {
-  width: 200px;
-  height: 40px;
+  width: 85px;
+  height: 30px;
   background-color: rgb(64, 138, 248);
   color: white;
   border: none;
   border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn__addClient:hover {
+  background-color: rgb(27, 118, 255);
+}
+
+.client__item {
+  /* margin: 0 1.5em; */
+  list-style-type: none;
+  margin-bottom: 0.6em;
+}
+
+.client__itemContainer {
+  margin: 1.25em;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(184, 184, 184);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.client__itemTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.client__itemTitle {
+  display: flex;
+  align-items: center;
+}
+
+.client__avatar {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.5em;
+  /* background-color: rgb(240, 240, 240); */
+  background-color: #c2b280;
+  border-radius: 50%;
+}
+
+.client__initials {
+  color: #6d5716;
+  font-size: 14px;
+  font-weight: 600;
+}
+/* 
+//  #CCCCFF / #7575ff
+//  #ADD8E6 / #509ab3
+//  #96DED1 / 37b19a
+//  #9FE2BF / 3cac72
+//  #DAA06D / 7a4414
+//  #e9947a / af3a16
+//  #C2B280 / 6d5716
+//  #F2D2BD
+//  #C2B280
+//  #B2BEB5
+//  #FFD580
+//  #FFE5B4 */
+
+.client__itemBottom {
+  margin-top: 1.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dx__title {
+  font-size: 14px;
+  color: rgb(179, 179, 179);
+}
+
+.session__title {
+  font-size: 14px;
+  color: rgb(179, 179, 179);
+}
+
+.client__info {
+}
+.client__name {
+  font-size: 18px;
+}
+
+.client__options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(240, 240, 240);
+  width: 20px;
+  height: 20px;
 }

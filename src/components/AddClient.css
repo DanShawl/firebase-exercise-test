@@ -14,5 +14,6 @@
   box-shadow: rgba(138, 138, 138, 0.2) 0px -10px 10px;
   position: fixed;
   bottom: 0;
+  background-color: #fff;
   /* background-color: black; */
 }
