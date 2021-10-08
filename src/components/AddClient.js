@@ -10,14 +10,19 @@ const AddClient = ({
   email,
   setEmail,
   addClient,
+  dx,
+  setDx,
 }) => {
   return (
     <div className="modal__background">
       <div className="modal__container">
-        <div className="close__btn">
-          <button onClick={() => closeModal(false)}> X </button>
+        <div className="modal__header">
+          <h2>Add Client</h2>
+          <button className="close__btn" onClick={() => closeModal(false)}>
+            {' '}
+            x{' '}
+          </button>
         </div>
-        <h2>Add Client</h2>
         <form action="">
           <div className="client__info">
             <input
@@ -38,19 +43,29 @@ const AddClient = ({
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            <input
+              type="text"
+              placeholder="Diagnosis"
+              value={dx}
+              onChange={(e) => setDx(e.target.value)}
+            />
           </div>
           <div className="client__notes">
-            <p>diagnosis</p>
-            <p>eval notes</p>
+            {/* <input
+              type="text"
+              placeholder="Diagnosis"
+              value={dx}
+              onChange={(e) => setDx(e.target.value)}
+            /> */}
           </div>
           <div className="modal__btns">
-            <button onClick={() => closeModal(false)}>Cancel</button>
             <button
               onClick={addClient}
               disabled={!firstName || !lastName || !email}
             >
               Add Client
             </button>
+            <button onClick={() => closeModal(false)}>Cancel</button>
           </div>
         </form>
       </div>

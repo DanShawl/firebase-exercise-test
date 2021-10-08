@@ -60,14 +60,14 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 0.5em;
+  margin-right: 0.75em;
   /* background-color: rgb(240, 240, 240); */
-  background-color: #c2b280;
+  background-color: rgb(27, 118, 255);
   border-radius: 50%;
 }
 
 .client__initials {
-  color: #6d5716;
+  color: white;
   font-size: 14px;
   font-weight: 600;
 }
@@ -86,6 +86,7 @@ header {
 //  #FFE5B4 */
 
 .client__itemBottom {
+  /* border-top: 1px solid lightgray; */
   margin-top: 1.5em;
   display: flex;
   justify-content: space-between;
@@ -93,13 +94,21 @@ header {
 }
 
 .dx__title {
-  font-size: 14px;
+  font-size: 12px;
   color: rgb(179, 179, 179);
 }
 
-.session__title {
+.dx__name {
   font-size: 14px;
+}
+
+.session__title {
+  font-size: 12px;
   color: rgb(179, 179, 179);
+}
+
+.session__num {
+  font-size: 14px;
 }
 
 .client__info {

@@ -8,12 +8,50 @@
 } */
 
 .modal__container {
+  padding: 1.5em;
   width: 100%;
   /* height: 500px; */
-  border-radius: 5px 5px 0 0;
+  border-radius: 6px 6px 0 0;
   box-shadow: rgba(138, 138, 138, 0.2) 0px -10px 10px;
   position: fixed;
   bottom: 0;
   background-color: #fff;
   /* background-color: black; */
+}
+
+.modal__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5em;
+}
+
+.close__btn {
+  font-size: 18px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.client__info {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* flex-wrap: wrap; */
+  gap: 0.4em;
+  text-align: left;
+}
+
+.client__info > input {
+  width: 100%;
+  /* width: 45%; */
+}
+
+input {
+  padding: 0.4em;
+  padding-left: 0.4em;
+  margin: 0;
+  margin-bottom: 1em;
+  border: none;
 }

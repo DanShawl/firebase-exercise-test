@@ -4,6 +4,8 @@ import {
   collection,
   onSnapshot,
   doc,
+  query,
+  orderBy,
   serverTimestamp,
 } from 'firebase/firestore';
 import { db, auth } from '../firebase';
@@ -17,19 +19,41 @@ const Dashboard = ({ currentUser }) => {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [currentClient, setCurrentClient] = useState('');
+  const [dx, setDx] = useState('');
+
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     onSnapshot(collection(db, `users/${currentUser}/clients`), (snapshot) => {
+  //       setClients(
+  //         snapshot.docs.map((doc) => ({
+  //           id: doc.id,
+  //           client: doc.data(),
+  //           // firstName: doc.data().eval.firstName,
+  //           // lastName: doc.data().eval.lastName,
+  //         }))
+  //       );
+  //     });
+  //   }
+  // }, [currentUser]);
 
   useEffect(() => {
     if (currentUser) {
-      onSnapshot(collection(db, `users/${currentUser}/clients`), (snapshot) => {
-        setClients(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            client: doc.data(),
-            // firstName: doc.data().eval.firstName,
-            // lastName: doc.data().eval.lastName,
-          }))
-        );
-      });
+      onSnapshot(
+        query(
+          collection(db, `users/${currentUser}/clients`),
+          orderBy('timestamp', 'desc')
+        ),
+        (snapshot) => {
+          setClients(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              client: doc.data(),
+              // firstName: doc.data().eval.firstName,
+              // lastName: doc.data().eval.lastName,
+            }))
+          );
+        }
+      );
     }
   }, [currentUser]);
 
@@ -68,6 +92,7 @@ const Dashboard = ({ currentUser }) => {
     let randomNum = Math.floor(Math.random() * colorList.length);
     return randomNum;
   };
+  // console.log(serverTimestamp());
 
   //  creates a new client with the path clients/newID
   const addClient = (e) => {
@@ -84,7 +109,8 @@ const Dashboard = ({ currentUser }) => {
       firstName: firstName,
       lastName: lastName,
       email: email,
-
+      dx: dx,
+      timestamp: serverTimestamp(),
       color: colorList[themeNumber].color,
       bgColor: colorList[themeNumber].bgColor,
     });
@@ -98,6 +124,7 @@ const Dashboard = ({ currentUser }) => {
     setEmail('');
     setFirstName('');
     setLastName('');
+    setDx('');
     setOpenModal(false);
   };
 
@@ -118,10 +145,12 @@ const Dashboard = ({ currentUser }) => {
           setLastName={setLastName}
           email={email}
           setEmail={setEmail}
+          dx={dx}
+          setDx={setDx}
           addClient={addClient}
         />
       )}
-
+      {/* ADD A CONDITION TO TELL USER TO ADD CLIENTS IF NONE */}
       <div>
         <ul>
           {clients.map(({ id, client }) => (
@@ -136,7 +165,7 @@ const Dashboard = ({ currentUser }) => {
                       </p>
                     </div>
                     <h2 className="client__name">
-                      {client.firstName} {client.lastName}
+                      {client.firstName + ' ' + client.lastName}
                     </h2>
                   </div>
                   <div className="client__options">
@@ -146,11 +175,11 @@ const Dashboard = ({ currentUser }) => {
                 <div className="client__itemBottom">
                   <div className="client__dx">
                     <p className="dx__title">Diagnosis</p>
-                    <p className="dx__name">Patellar Tendonopathy</p>
+                    <p className="dx__name">{client.dx}</p>
                   </div>
                   <div className="client__sessions">
                     <p className="session__title">Last Session</p>
-                    <p className="session__num">Oct. 5, 2021</p>
+                    <p className="session__num">Oct 5, 2021</p>
                   </div>
                 </div>
               </div>
