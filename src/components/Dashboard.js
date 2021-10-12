@@ -11,6 +11,9 @@ import {
 import { db, auth } from '../firebase';
 import './Dashboard.css';
 import AddClient from './AddClient';
+import WorkoutList from './WorkoutList';
+
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 const Dashboard = ({ currentUser }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -38,6 +41,7 @@ const Dashboard = ({ currentUser }) => {
 
   useEffect(() => {
     if (currentUser) {
+      // console.log(match);
       onSnapshot(
         query(
           collection(db, `users/${currentUser}/clients`),
@@ -57,43 +61,6 @@ const Dashboard = ({ currentUser }) => {
     }
   }, [currentUser]);
 
-  const colorList = [
-    {
-      bgColor: 'CCCCFF',
-      color: '7575ff',
-    },
-    {
-      bgColor: 'ADD8E6',
-      color: '509ab3',
-    },
-    {
-      bgColor: '96DED1',
-      color: '37b19a',
-    },
-    {
-      bgColor: '9FE2BF',
-      color: '3cac72',
-    },
-    {
-      bgColor: 'DAA06D',
-      color: '7a4414',
-    },
-    {
-      bgColor: 'e9947a',
-      color: 'af3a16',
-    },
-    {
-      bgColor: 'C2B280',
-      color: '6d5716',
-    },
-  ];
-
-  const getRandomNum = () => {
-    let randomNum = Math.floor(Math.random() * colorList.length);
-    return randomNum;
-  };
-  // console.log(serverTimestamp());
-
   //  creates a new client with the path clients/newID
   const addClient = (e) => {
     e.preventDefault();
@@ -103,7 +70,7 @@ const Dashboard = ({ currentUser }) => {
     let newLastName = lastName.toLowerCase();
     let newID = `${newFirstName}_${newLastName}`;
 
-    let themeNumber = getRandomNum();
+    // let themeNumber = getRandomNum();
 
     setDoc(doc(clientListRef, newID), {
       firstName: firstName,
@@ -111,8 +78,8 @@ const Dashboard = ({ currentUser }) => {
       email: email,
       dx: dx,
       timestamp: serverTimestamp(),
-      color: colorList[themeNumber].color,
-      bgColor: colorList[themeNumber].bgColor,
+      // color: colorList[themeNumber].color,
+      // bgColor: colorList[themeNumber].bgColor,
     });
 
     //  adds client with auto id
@@ -151,42 +118,46 @@ const Dashboard = ({ currentUser }) => {
         />
       )}
       {/* ADD A CONDITION TO TELL USER TO ADD CLIENTS IF NONE */}
-      <div>
-        <ul>
-          {clients.map(({ id, client }) => (
-            <li className="client__item" onClick={(e) => setCurrentClient(id)}>
-              <div className="client__itemContainer">
-                <div className="client__itemTop">
-                  <div className="client__itemTitle">
-                    <div className="client__avatar">
-                      <p className="client__initials">
-                        {client.firstName[0]}
-                        {client.lastName[0]}
-                      </p>
+      {clients ? (
+        <div>
+          <ul>
+            {clients.map(({ id, client }) => (
+              <li
+                className="client__item"
+                onClick={(e) => setCurrentClient(id)}
+              >
+                <div className="client__itemContainer">
+                  <div className="client__itemTop">
+                    <div className="client__itemTitle">
+                      <div className="client__avatar">
+                        <p className="client__initials">
+                          {client.firstName[0]}
+                          {client.lastName[0]}
+                        </p>
+                      </div>
+                      <h2 className="client__name">
+                        {client.firstName + ' ' + client.lastName}
+                      </h2>
                     </div>
-                    <h2 className="client__name">
-                      {client.firstName + ' ' + client.lastName}
-                    </h2>
+                    <div className="client__options">
+                      <h6>-</h6>
+                    </div>
                   </div>
-                  <div className="client__options">
-                    <h6>-</h6>
-                  </div>
-                </div>
-                <div className="client__itemBottom">
-                  <div className="client__dx">
-                    <p className="dx__title">Diagnosis</p>
-                    <p className="dx__name">{client.dx}</p>
-                  </div>
-                  <div className="client__sessions">
-                    <p className="session__title">Last Session</p>
-                    <p className="session__num">Oct 5, 2021</p>
+                  <div className="client__itemBottom">
+                    <div className="client__dx">
+                      <p className="dx__title">Diagnosis</p>
+                      <p className="dx__name">{client.dx}</p>
+                    </div>
+                    <div className="client__sessions">
+                      <p className="session__title">Last Session</p>
+                      <p className="session__num">Oct 5, 2021</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-        {/* {clients.map(({ id, client }) => (
+              </li>
+            ))}
+          </ul>
+          {/* {clients.map(({ id, client }) => (
           <div onClick={(e) => setCurrentClient(id)}>
             <button>
               {client.firstName} {client.lastName}
@@ -194,7 +165,14 @@ const Dashboard = ({ currentUser }) => {
            
           </div>
         ))} */}
-      </div>
+        </div>
+      ) : (
+        <div>
+          <h1>you have no clients</h1>
+        </div>
+      )}
+
+      {/* <WorkoutList /> */}
 
       {/* Search Clients */}
       {/* Add Clients */}
@@ -219,3 +197,84 @@ export default Dashboard;
 //  #B2BEB5
 //  #FFD580
 //  #FFE5B4
+
+// {/* <div>
+//   <ul>
+//     {clients.map(({ id, client }) => (
+//       <li className="client__item" onClick={(e) => setCurrentClient(id)}>
+//         <div className="client__itemContainer">
+//           <div className="client__itemTop">
+//             <div className="client__itemTitle">
+//               <div className="client__avatar">
+//                 <p className="client__initials">
+//                   {client.firstName[0]}
+//                   {client.lastName[0]}
+//                 </p>
+//               </div>
+//               <h2 className="client__name">
+//                 {client.firstName + ' ' + client.lastName}
+//               </h2>
+//             </div>
+//             <div className="client__options">
+//               <h6>-</h6>
+//             </div>
+//           </div>
+//           <div className="client__itemBottom">
+//             <div className="client__dx">
+//               <p className="dx__title">Diagnosis</p>
+//               <p className="dx__name">{client.dx}</p>
+//             </div>
+//             <div className="client__sessions">
+//               <p className="session__title">Last Session</p>
+//               <p className="session__num">Oct 5, 2021</p>
+//             </div>
+//           </div>
+//         </div>
+//       </li>
+//     ))}
+//   </ul>
+//   {/* {clients.map(({ id, client }) => (
+//     <div onClick={(e) => setCurrentClient(id)}>
+//       <button>
+//         {client.firstName} {client.lastName}
+//       </button>
+
+//     </div>
+//   ))}
+// </div> */}
+
+// const colorList = [
+//   {
+//     bgColor: 'CCCCFF',
+//     color: '7575ff',
+//   },
+//   {
+//     bgColor: 'ADD8E6',
+//     color: '509ab3',
+//   },
+//   {
+//     bgColor: '96DED1',
+//     color: '37b19a',
+//   },
+//   {
+//     bgColor: '9FE2BF',
+//     color: '3cac72',
+//   },
+//   {
+//     bgColor: 'DAA06D',
+//     color: '7a4414',
+//   },
+//   {
+//     bgColor: 'e9947a',
+//     color: 'af3a16',
+//   },
+//   {
+//     bgColor: 'C2B280',
+//     color: '6d5716',
+//   },
+// ];
+
+// const getRandomNum = () => {
+//   let randomNum = Math.floor(Math.random() * colorList.length);
+//   return randomNum;
+// };

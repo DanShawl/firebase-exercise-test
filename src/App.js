@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Login from './components/Login';
 import Header from './components/Header';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import {
   setDoc,
@@ -19,6 +20,7 @@ import {
 } from 'firebase/auth';
 import { db, auth } from './firebase';
 import Dashboard from './components/Dashboard';
+import WorkoutList from './components/WorkoutList';
 
 function App() {
   //  user authentication state
@@ -182,11 +184,19 @@ function App() {
           setUsername={setUsername}
         />
       )}
-      <Dashboard currentUser={currentUser} />
+      {/* <Dashboard currentUser={currentUser} /> */}
 
       <form action="">
         <button onClick={addWorkout}>add workout</button>
       </form>
+
+      <Router>
+        <Switch>
+          <Route path="/dashboard" exact>
+            <Dashboard currentUser={currentUser} />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
