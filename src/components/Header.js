@@ -23,7 +23,7 @@ const Header = ({ handleLogout, currentUser }) => {
       <section className="header">
         <nav>
           {/* <h2>Current Clients</h2> */}
-          <button onClick={handleLogout}>Logout</button>
+          {/* <button onClick={handleLogout}>Logout</button> */}
         </nav>
       </section>
       <div className="client__list"></div>

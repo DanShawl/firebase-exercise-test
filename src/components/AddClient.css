@@ -48,10 +48,30 @@
   /* width: 45%; */
 }
 
+.client__names {
+  display: flex;
+}
+
 input {
   padding: 0.4em;
   padding-left: 0.4em;
   margin: 0;
   margin-bottom: 1em;
   border: none;
+}
+
+.modal__btns button {
+  padding: 0.5em 1em;
+  border: none;
+}
+
+.add__btn {
+  background-color: rgb(64, 138, 248);
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.cancel__btn {
+  background: none;
 }

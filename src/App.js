@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Login from './components/Login';
 import Header from './components/Header';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import {
   setDoc,
@@ -186,17 +186,20 @@ function App() {
       )}
       {/* <Dashboard currentUser={currentUser} /> */}
 
-      <form action="">
+      {/* <form action="">
         <button onClick={addWorkout}>add workout</button>
-      </form>
+      </form> */}
 
-      <Router>
-        <Switch>
-          <Route path="/dashboard" exact>
-            <Dashboard currentUser={currentUser} />
-          </Route>
-        </Switch>
-      </Router>
+      {/* <Router> */}
+      {/* <Switch> */}
+      {/* <Route path="/dashboard" exact> */}
+      <Dashboard currentUser={currentUser} handleLogout={handleLogout} />
+      {/* </Route> */}
+      {/* <Route path="/dashboard/:id">
+            <WorkoutList />
+          </Route> */}
+      {/* </Switch> */}
+      {/* </Router> */}
     </div>
   );
 }

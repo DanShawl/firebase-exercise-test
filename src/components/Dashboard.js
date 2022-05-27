@@ -13,9 +13,20 @@ import './Dashboard.css';
 import AddClient from './AddClient';
 import WorkoutList from './WorkoutList';
 
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link,
+//   useRouteMatch,
+// } from 'react-router-dom';
 
-const Dashboard = ({ currentUser }) => {
+import AddIcon from '@mui/icons-material/Add';
+import NotesIcon from '@mui/icons-material/Notes';
+import DeleteIcon from '@mui/icons-material/Delete';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
+const Dashboard = ({ currentUser, handleLogout }) => {
   const [openModal, setOpenModal] = useState(false);
   const [clients, setClients] = useState([]);
   const [firstName, setFirstName] = useState('');
@@ -95,6 +106,9 @@ const Dashboard = ({ currentUser }) => {
     setOpenModal(false);
   };
 
+  // let match = useRouteMatch();
+  // console.log(match);
+
   return (
     <div className="dashboard">
       <header>
@@ -117,16 +131,30 @@ const Dashboard = ({ currentUser }) => {
           addClient={addClient}
         />
       )}
+      <div className="client__searchContainer">
+        <input
+          className="client__search"
+          type="text"
+          placeholder="Search clients..."
+        />
+      </div>
       {/* ADD A CONDITION TO TELL USER TO ADD CLIENTS IF NONE */}
+
+      {/* <Router> */}
       {clients ? (
         <div>
           <ul>
             {clients.map(({ id, client }) => (
               <li
-                className="client__item"
-                onClick={(e) => setCurrentClient(id)}
+                key={id}
+                className={`client__item client__item${id}`}
+                // onClick={(e) => setCurrentClient(id)}
               >
-                <div className="client__itemContainer">
+                {/* <Link to={`${match.url}/${id}`}> */}
+                <div
+                  onClick={(e) => setCurrentClient(id)}
+                  className={`client__itemContainer client__${id}`}
+                >
                   <div className="client__itemTop">
                     <div className="client__itemTitle">
                       <div className="client__avatar">
@@ -140,7 +168,7 @@ const Dashboard = ({ currentUser }) => {
                       </h2>
                     </div>
                     <div className="client__options">
-                      <h6>-</h6>
+                      <MoreVertIcon />
                     </div>
                   </div>
                   <div className="client__itemBottom">
@@ -154,6 +182,20 @@ const Dashboard = ({ currentUser }) => {
                     </div>
                   </div>
                 </div>
+                {/* </Link> */}
+                {/* {id === 'larry_stevens' ? (
+                  <div className="client__menu">
+                    <div className="menu__box menu__addWorkout">
+                      <AddIcon />
+                    </div>
+                    <div className="menu__box menu__note">
+                      <NotesIcon />
+                    </div>
+                    <div className="menu__box menu__deleteClient">
+                      <DeleteIcon />
+                    </div>
+                  </div>
+                ) : null} */}
               </li>
             ))}
           </ul>
@@ -167,10 +209,37 @@ const Dashboard = ({ currentUser }) => {
         ))} */}
         </div>
       ) : (
-        <div>
-          <h1>you have no clients</h1>
-        </div>
+        <WorkoutList
+        // firstName={firstName}
+
+        // lastName={lastName}
+        // setLastName={setLastName}
+        // email={email}
+        // setEmail={setEmail}
+        // dx={dx}
+        // setDx={setDx}
+        // addClient={addClient}
+        />
       )}
+
+      {/* <Switch> */}
+      {/* <Route path={`${match.path}/:id`}> */}
+      <WorkoutList
+        setCurrentClient={setCurrentClient}
+        currentClient={currentClient}
+        // firstName={firstName}
+
+        // lastName={lastName}
+        // setLastName={setLastName}
+        // email={email}
+        // setEmail={setEmail}
+        // dx={dx}
+        // setDx={setDx}
+        // addClient={addClient}
+      />
+      {/* </Route> */}
+      {/* </Switch> */}
+      {/* </Router> */}
 
       {/* <WorkoutList /> */}
 

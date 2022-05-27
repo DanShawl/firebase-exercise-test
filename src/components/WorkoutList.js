@@ -1,5 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { db, auth } from '../firebase';
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link,
+//   useParams,
+// } from 'react-router-dom';
 
+import {
+  setDoc,
+  collection,
+  onSnapshot,
+  doc,
+  serverTimestamp,
+} from 'firebase/firestore';
 //  Data needed:
 //    1.  Current client name / currentUser
 //    2.  Client diagnosis
@@ -7,7 +22,8 @@ import React from 'react';
 //    4.  Add previous workout button
 //    5.  List of all previous workouts
 
-const WorkoutList = ({ currentClient }) => {
+const WorkoutList = ({ setCurrentClient, currentClient }) => {
+  // console.log(currentClient);
   // const addWorkout = (e) => {
   //   e.preventDefault();
   //   // const clientRef = doc(db, `clients/${currentClient}`);
@@ -34,10 +50,13 @@ const WorkoutList = ({ currentClient }) => {
   //   //   exercise: 'Deadlift',
   //   // });
   // };
-
+  // let id = useParams();
   return (
     <div>
-      <h1>Current Client</h1>
+      {/* <h1>Current Client: {currentClient}</h1>
+      <button onClick={(e) => setCurrentClient(null)}>
+       
+      </button> */}
       {/*  */}
       {/*  */}
       {/*  */}
