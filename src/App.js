@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Login from './components/Login';
 import Header from './components/Header';
-// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import {
   setDoc,
@@ -17,6 +17,7 @@ import {
   updateProfile,
   signOut,
   signInWithEmailAndPassword,
+  signInAnonymously,
 } from 'firebase/auth';
 import { db, auth } from './firebase';
 import Dashboard from './components/Dashboard';
@@ -55,6 +56,7 @@ function App() {
   const handleSignIn = (e) => {
     clearErrors();
     e.preventDefault();
+
     signInWithEmailAndPassword(auth, userEmail, userPassword).catch((error) => {
       switch (error.code) {
         case 'auth/invalid-email':
@@ -69,6 +71,17 @@ function App() {
     });
   };
 
+  const handleSignInAsGuest = (e) => {
+    clearErrors();
+    e.preventDefault();
+
+    signInAnonymously(auth)
+      .then(() => {})
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+  };
   // const updateUsername = () => {};
   const handleSignUp = (e) => {
     clearErrors();
@@ -105,14 +118,12 @@ function App() {
     const unsubscribe = onAuthStateChanged(auth, (authUser) => {
       if (authUser) {
         clearInput();
-        //  user signs in
-        // console.log(authUser);
+
         setUser(authUser);
 
         setCurrentUser(authUser.uid);
       } else {
         setUser(null);
-        //  User signs out out
       }
     });
     return () => {
@@ -176,6 +187,7 @@ function App() {
           setPassword={setUserPassword}
           handleSignIn={handleSignIn}
           handleSignUp={handleSignUp}
+          handleSignInAsGuest={handleSignInAsGuest}
           hasAccount={hasAccount}
           setHasAccount={setHasAccount}
           emailError={userEmailError}
@@ -184,22 +196,14 @@ function App() {
           setUsername={setUsername}
         />
       )}
-      {/* <Dashboard currentUser={currentUser} /> */}
 
       {/* <form action="">
         <button onClick={addWorkout}>add workout</button>
       </form> */}
 
-      {/* <Router> */}
-      {/* <Switch> */}
-      {/* <Route path="/dashboard" exact> */}
-      <Dashboard currentUser={currentUser} handleLogout={handleLogout} />
-      {/* </Route> */}
-      {/* <Route path="/dashboard/:id">
-            <WorkoutList />
-          </Route> */}
-      {/* </Switch> */}
-      {/* </Router> */}
+      {currentUser ? (
+        <Dashboard currentUser={currentUser} handleLogout={handleLogout} />
+      ) : null}
     </div>
   );
 }

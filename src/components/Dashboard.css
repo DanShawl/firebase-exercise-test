@@ -14,13 +14,22 @@ header {
 }
 
 .btn__addClient {
-  width: 85px;
+  width: 115px;
   height: 30px;
   background-color: rgb(64, 138, 248);
   color: white;
   border: none;
   border-radius: 3px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.5em;
+  font-weight: 600;
+}
+.addIcon {
+  font-size: 8px;
+  width: 5px;
 }
 
 .btn__addClient:hover {
@@ -143,6 +152,7 @@ a {
 .dx__title {
   font-size: 12px;
   color: rgb(179, 179, 179);
+  margin-bottom: 0.4em;
 }
 
 .dx__name {
@@ -152,6 +162,7 @@ a {
 .session__title {
   font-size: 12px;
   color: rgb(179, 179, 179);
+  margin-bottom: 0.4em;
 }
 
 .session__num {
@@ -189,15 +200,56 @@ ul:first-child {
 }
 
 .client__searchContainer {
-  width: 100%;
+  /* width: 100%; */
+  margin: 0 1.5em;
   display: flex;
+  column-gap: 1em;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  overflow: hidden;
+  max-width: 500px;
 }
 
 .client__search {
-  margin: 0 1.5em;
-  width: 100%;
+  /* margin: 0 1.5em; */
+  /* width: 100%; */
+  /* flex-grow: 1; */
+
+  flex: 1;
+  margin-bottom: 0;
   border: 1px solid lightgray;
   border-radius: 3px;
+  height: 100%;
+}
+
+.noClient__container {
+  border: 1px solid lightgray;
+  background-color: #e6e6e6;
+  padding: 3rem 3rem;
+  text-align: center;
+  margin: 5rem 1rem 0;
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.noClient__container > h2 {
+  margin-bottom: 2rem;
+}
+
+.clients__container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 678px) {
+  /* header {
+    max-width: 500px;
+  } */
+  .noClient__container {
+    margin: 5rem auto;
+    max-width: 450px;
+  }
 }

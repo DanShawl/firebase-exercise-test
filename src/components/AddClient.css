@@ -19,6 +19,18 @@
   /* background-color: black; */
 }
 
+@media screen and (min-width: 678px) {
+  .modal__container {
+    /* max-width: 450px; */
+    height: 100%;
+    width: 300px;
+    right: 0;
+    border-left: 1px solid lightgray;
+    border-radius: 0;
+    /* box-shadow: rgba(8, 8, 8, 0.2) 50px 50px 0; */
+  }
+}
+
 .modal__header {
   width: 100%;
   display: flex;
@@ -49,15 +61,23 @@
 }
 
 .client__names {
-  display: flex;
+  /* display: flex; */
+  /* max-width: 100%; */
+  /* overflow-x: hidden; */
+  /* width: 100%; */
+}
+
+client__names > input {
+  width: 100%;
 }
 
 input {
   padding: 0.4em;
-  padding-left: 0.4em;
+  padding-left: 1em;
   margin: 0;
   margin-bottom: 1em;
   border: none;
+  outline: none;
 }
 
 .modal__btns button {
@@ -70,6 +90,8 @@ input {
   color: white;
   border-radius: 3px;
   cursor: pointer;
+  width: 100%;
+  font-weight: 600;
 }
 
 .cancel__btn {

@@ -3,11 +3,36 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 500px;
+  margin: 0 auto;
 }
+
+label {
+  margin-bottom: 0.5em;
+}
+
 .login__container {
   display: flex;
   flex-direction: column;
   width: 75%;
+}
+
+.login__container h1 {
+  margin-bottom: 1rem;
+  font-size: 4em;
+  text-align: center;
+}
+
+.login__container .login__text {
+  text-align: center;
+  line-height: 1.2;
+  font-size: 1.1em;
+  color: rgb(88, 88, 88);
+  margin-bottom: 3rem;
+}
+.username__container {
+  display: flex;
+  flex-direction: column;
 }
 
 .btn__container {
@@ -15,7 +40,13 @@
 }
 
 input {
+  height: 3rem;
+  /* padding-left: rem; */
   margin-bottom: 1em;
+  /* border-bottom: 1px solid black; */
+  /* outline: 1px solid rgba(0, 0, 0, 0.271); */
+  border-radius: 3px;
+  background-color: #e6e6e6;
 }
 
 .btn__signIn {
@@ -31,6 +62,10 @@ input {
 
 .btn__signIn:hover {
   background-color: rgb(25, 114, 248);
+}
+
+.btn__signInGuest {
+  margin-bottom: 4rem;
 }
 
 .btn__swap {

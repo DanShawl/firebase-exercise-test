@@ -25,20 +25,20 @@ const AddClient = ({
         </div>
         <form action="">
           <div className="client__info">
-            <div className="client__names">
-              <input
-                type="text"
-                placeholder="First Name"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Last Name"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </div>
+            {/* <div className="client__names"> */}
+            <input
+              type="text"
+              placeholder="First Name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            {/* </div> */}
             <input
               type="text"
               placeholder="Email"
@@ -68,9 +68,9 @@ const AddClient = ({
             >
               Add Client
             </button>
-            <button className="cancel__btn" onClick={() => closeModal(false)}>
+            {/* <button className="cancel__btn" onClick={() => closeModal(false)}>
               Cancel
-            </button>
+            </button> */}
           </div>
         </form>
       </div>

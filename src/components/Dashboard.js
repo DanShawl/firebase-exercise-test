@@ -3,6 +3,7 @@ import {
   setDoc,
   collection,
   onSnapshot,
+  getDoc,
   doc,
   query,
   orderBy,
@@ -19,12 +20,16 @@ import WorkoutList from './WorkoutList';
 //   Route,
 //   Link,
 //   useRouteMatch,
+
 // } from 'react-router-dom';
 
 import AddIcon from '@mui/icons-material/Add';
+// import ChevronRight from '@mui/icons-material/ChevronRight';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import NotesIcon from '@mui/icons-material/Notes';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { async } from '@firebase/util';
 
 const Dashboard = ({ currentUser, handleLogout }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -34,7 +39,40 @@ const Dashboard = ({ currentUser, handleLogout }) => {
   const [email, setEmail] = useState('');
   const [currentClient, setCurrentClient] = useState('');
   const [dx, setDx] = useState('');
+  const [clientName, setClientName] = useState('');
 
+  if (currentClient) {
+    const getName = async () => {
+      const docRef = doc(db, `users/${currentUser}/clients/${currentClient}`);
+      const docSnap = await getDoc(docRef);
+      // const clientRef = await getDoc(collection(db, `users/${currentUser}/clients/${currentClient}`))
+
+      if (docSnap.exists()) {
+        setClientName(docSnap.data().firstName + ' ' + docSnap.data().lastName);
+      }
+    };
+    getName();
+  }
+  // if(currentClient) {
+
+  //   useEffect(
+  //     () =>
+  //       onSnapshot(
+  //         query(
+  //           doc(
+  //             db,
+  //             `users/${currentUser}/clients/${currentClient}`
+  //           ),
+  //           orderBy('timestamp', 'desc')
+  //         ),
+  //         (snapshot) => {
+  //           //  everytime the value in the backend changes, it updates the react state with the latest docs
+  //           setWorkouts(snapshot.docs);
+  //         }
+  //       ),
+  //     [db]
+  //   )
+  // }
   // useEffect(() => {
   //   if (currentUser) {
   //     onSnapshot(collection(db, `users/${currentUser}/clients`), (snapshot) => {
@@ -71,7 +109,6 @@ const Dashboard = ({ currentUser, handleLogout }) => {
       );
     }
   }, [currentUser]);
-
   //  creates a new client with the path clients/newID
   const addClient = (e) => {
     e.preventDefault();
@@ -108,13 +145,13 @@ const Dashboard = ({ currentUser, handleLogout }) => {
 
   // let match = useRouteMatch();
   // console.log(match);
-
+  // console.log(currentClient);
   return (
     <div className="dashboard">
       <header>
-        <h1>Clients</h1>
-        <button className="btn__addClient" onClick={() => setOpenModal(true)}>
-          Add Client
+        <h1>{!currentClient ? 'Clients' : clientName}</h1>
+        <button className="btn__addClient" onClick={handleLogout}>
+          Sign Out
         </button>
       </header>
       {openModal && (
@@ -131,17 +168,100 @@ const Dashboard = ({ currentUser, handleLogout }) => {
           addClient={addClient}
         />
       )}
-      <div className="client__searchContainer">
-        <input
-          className="client__search"
-          type="text"
-          placeholder="Search clients..."
-        />
-      </div>
-      {/* ADD A CONDITION TO TELL USER TO ADD CLIENTS IF NONE */}
 
-      {/* <Router> */}
-      {clients ? (
+      {!currentClient ? (
+        clients.length ? (
+          <div>
+            <ul className="clients__container">
+              <div className="client__searchContainer">
+                <input
+                  className="client__search"
+                  type="text"
+                  placeholder="Search clients..."
+                />
+                <button
+                  className="btn__addClient"
+                  onClick={() => setOpenModal(true)}
+                >
+                  <AddIcon fontSize="small" />
+                  <span>Add Client</span>
+                </button>
+              </div>
+              {/* <h2>Select a client to create a workout.</h2> */}
+              {clients.map(({ id, client }) => (
+                <li
+                  key={id}
+                  className={`client__item client__item${id}`}
+                  onClick={(e) => setCurrentClient(id)}
+                >
+                  <div
+                    onClick={(e) => setCurrentClient(id)}
+                    className={`client__itemContainer client__${id}`}
+                  >
+                    <div className="client__itemTop">
+                      <div className="client__itemTitle">
+                        <div className="client__avatar">
+                          <p className="client__initials">
+                            {client.firstName[0]}
+                            {client.lastName[0]}
+                          </p>
+                        </div>
+                        <h2 className="client__name">
+                          {client.firstName + ' ' + client.lastName}
+                        </h2>
+                      </div>
+                      <div className="client__options">
+                        {/* <MoreVertIcon /> */}
+                        <ChevronRightIcon />
+                      </div>
+                    </div>
+                    <div className="client__itemBottom">
+                      <div className="client__dx">
+                        <p className="dx__title">Diagnosis</p>
+                        <p className="dx__name">{client.dx}</p>
+                      </div>
+                      <div className="client__sessions">
+                        <p className="session__title">Last Session</p>
+                        <p className="session__num">March 5, 2022</p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div className="noClient__container">
+            <h2>Start creating workouts by adding a client.</h2>
+            <button
+              className="btn__addClient"
+              onClick={() => setOpenModal(true)}
+            >
+              <AddIcon fontSize="small" />
+              <span>Add Client</span>
+            </button>
+          </div>
+          // <WorkoutList
+          // // firstName={firstName}
+
+          // // lastName={lastName}
+          // // setLastName={setLastName}
+          // // email={email}
+          // // setEmail={setEmail}
+          // // dx={dx}
+          // // setDx={setDx}
+          // // addClient={addClient}
+          // />
+        )
+      ) : (
+        // <div>Exercise List</div>
+        <WorkoutList
+          currentClient={currentClient}
+          setCurrentClient={setCurrentClient}
+          currentUser={currentUser}
+        />
+      )}
+      {/* {clients ? (
         <div>
           <ul>
             {clients.map(({ id, client }) => (
@@ -150,7 +270,6 @@ const Dashboard = ({ currentUser, handleLogout }) => {
                 className={`client__item client__item${id}`}
                 // onClick={(e) => setCurrentClient(id)}
               >
-                {/* <Link to={`${match.url}/${id}`}> */}
                 <div
                   onClick={(e) => setCurrentClient(id)}
                   className={`client__itemContainer client__${id}`}
@@ -178,35 +297,15 @@ const Dashboard = ({ currentUser, handleLogout }) => {
                     </div>
                     <div className="client__sessions">
                       <p className="session__title">Last Session</p>
-                      <p className="session__num">Oct 5, 2021</p>
+                      <p className="session__num">March 5, 2022</p>
                     </div>
                   </div>
                 </div>
-                {/* </Link> */}
-                {/* {id === 'larry_stevens' ? (
-                  <div className="client__menu">
-                    <div className="menu__box menu__addWorkout">
-                      <AddIcon />
-                    </div>
-                    <div className="menu__box menu__note">
-                      <NotesIcon />
-                    </div>
-                    <div className="menu__box menu__deleteClient">
-                      <DeleteIcon />
-                    </div>
-                  </div>
-                ) : null} */}
+            
               </li>
             ))}
           </ul>
-          {/* {clients.map(({ id, client }) => (
-          <div onClick={(e) => setCurrentClient(id)}>
-            <button>
-              {client.firstName} {client.lastName}
-            </button>
-           
-          </div>
-        ))} */}
+         
         </div>
       ) : (
         <WorkoutList
@@ -220,10 +319,8 @@ const Dashboard = ({ currentUser, handleLogout }) => {
         // setDx={setDx}
         // addClient={addClient}
         />
-      )}
-
-      {/* <Switch> */}
-      {/* <Route path={`${match.path}/:id`}> */}
+      )} */}
+      {/* 
       <WorkoutList
         setCurrentClient={setCurrentClient}
         currentClient={currentClient}
@@ -236,16 +333,7 @@ const Dashboard = ({ currentUser, handleLogout }) => {
         // dx={dx}
         // setDx={setDx}
         // addClient={addClient}
-      />
-      {/* </Route> */}
-      {/* </Switch> */}
-      {/* </Router> */}
-
-      {/* <WorkoutList /> */}
-
-      {/* Search Clients */}
-      {/* Add Clients */}
-      {/* Client List */}
+      /> */}
     </div>
   );
 };
