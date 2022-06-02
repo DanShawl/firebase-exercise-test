@@ -40,6 +40,8 @@ const Dashboard = ({ currentUser, handleLogout }) => {
   const [currentClient, setCurrentClient] = useState('');
   const [dx, setDx] = useState('');
   const [clientName, setClientName] = useState('');
+  const [clientNote, setClientNote] = useState('');
+
   // const months = [
   //   'January',
   //   'February',
@@ -62,7 +64,8 @@ const Dashboard = ({ currentUser, handleLogout }) => {
       // const clientRef = await getDoc(collection(db, `users/${currentUser}/clients/${currentClient}`))
 
       if (docSnap.exists()) {
-        setClientName(docSnap.data().firstName + ' ' + docSnap.data().lastName);
+        setClientName(docSnap.data().firstName);
+        // setClientDx(docSnap.data().dx);
       }
     };
     getName();
@@ -139,6 +142,7 @@ const Dashboard = ({ currentUser, handleLogout }) => {
       lastName: lastName,
       email: email,
       dx: dx,
+      clientNote: clientNote,
       timestamp: serverTimestamp(),
       // color: colorList[themeNumber].color,
       // bgColor: colorList[themeNumber].bgColor,
@@ -154,6 +158,7 @@ const Dashboard = ({ currentUser, handleLogout }) => {
     setFirstName('');
     setLastName('');
     setDx('');
+    setClientNote('');
     setOpenModal(false);
   };
 
@@ -163,10 +168,22 @@ const Dashboard = ({ currentUser, handleLogout }) => {
   return (
     <div className="dashboard">
       <header>
-        <h1>{!currentClient ? 'Clients' : clientName}</h1>
-        <button className="btn__addClient" onClick={handleLogout}>
-          Sign Out
-        </button>
+        <h1>{!currentClient ? 'Dashboard' : clientName}</h1>
+        <div className="dashboard__btns">
+          {!currentClient ? (
+            <button
+              className="btn__addClient btn__addClient-fixed"
+              onClick={() => setOpenModal(true)}
+            >
+              <AddIcon fontSize="small" />
+              <span>Add Client</span>
+            </button>
+          ) : null}
+
+          <button className="btn__addClient btn__logout" onClick={handleLogout}>
+            Sign Out
+          </button>
+        </div>
       </header>
       {openModal && (
         <AddClient
@@ -180,6 +197,8 @@ const Dashboard = ({ currentUser, handleLogout }) => {
           dx={dx}
           setDx={setDx}
           addClient={addClient}
+          setClientNote={setClientNote}
+          clientNote={clientNote}
         />
       )}
 
@@ -187,7 +206,7 @@ const Dashboard = ({ currentUser, handleLogout }) => {
         clients.length ? (
           <div>
             <ul className="clients__container">
-              <div className="client__searchContainer">
+              {/* <div className="client__searchContainer">
                 <input
                   className="client__search"
                   type="text"
@@ -200,7 +219,7 @@ const Dashboard = ({ currentUser, handleLogout }) => {
                   <AddIcon fontSize="small" />
                   <span>Add Client</span>
                 </button>
-              </div>
+              </div> */}
               {/* <h2>Select a client to create a workout.</h2> */}
               {clients.map(({ id, client }) => (
                 <li
@@ -274,6 +293,8 @@ const Dashboard = ({ currentUser, handleLogout }) => {
           currentClient={currentClient}
           setCurrentClient={setCurrentClient}
           currentUser={currentUser}
+          setClientNote={setClientNote}
+          setOpenModal={setOpenModal}
         />
       )}
       {/* {clients ? (

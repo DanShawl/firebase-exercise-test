@@ -81,7 +81,7 @@ input {
   margin: 0;
   margin-bottom: 1em;
   border: none;
-  outline: none;
+  /* outline: none; */
 }
 
 .modal__btns button {
@@ -104,4 +104,19 @@ input {
 
 .cancel__btn {
   background: none;
+}
+
+textarea {
+  resize: none;
+  padding-top: 1em;
+  padding-left: 1em;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 3px;
+  background-color: #e6e6e6;
+  border: none;
+  margin-bottom: 2em;
+}
+
+textarea:focus {
+  outline: 1px solid lightgray;
 }

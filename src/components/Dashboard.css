@@ -13,6 +13,18 @@ header {
   margin-bottom: 1em;
 }
 
+@media screen and (max-width: 510px) {
+  .dashboard__btns {
+    /* width: 100%; */
+    /* margin: 0 1em; */
+  }
+  .btn__addClient-fixed {
+    position: fixed;
+    right: 1.25em;
+    bottom: 1em;
+  }
+}
+
 .btn__addClient {
   /* width: 115px; */
   height: 30px;
@@ -27,6 +39,18 @@ header {
   column-gap: 0.5em;
   font-weight: 600;
 }
+
+.btn__logout {
+  background-color: #e6e6e6;
+  color: black;
+}
+
+.dashboard__btns {
+  display: flex;
+  /* justify-content: space-between; */
+  column-gap: 1em;
+}
+
 .addIcon {
   font-size: 8px;
   width: 5px;
@@ -34,6 +58,9 @@ header {
 
 .btn__addClient:hover {
   background-color: rgb(27, 118, 255);
+}
+.btn__logout:hover {
+  background-color: #d0d0d0;
 }
 
 a {

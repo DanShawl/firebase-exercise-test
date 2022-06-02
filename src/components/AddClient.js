@@ -13,6 +13,8 @@ const AddClient = ({
   addClient,
   dx,
   setDx,
+  setClientNote,
+  clientNote,
 }) => {
   return (
     <div className="modal__background">
@@ -51,13 +53,23 @@ const AddClient = ({
               value={dx}
               onChange={(e) => setDx(e.target.value)}
             />
+            <textarea
+              type="text"
+              name=""
+              placeholder="Notes"
+              id=""
+              cols="30"
+              rows="6"
+              value={clientNote}
+              onChange={(e) => setClientNote(e.target.value)}
+            ></textarea>
           </div>
           <div className="client__notes">
             {/* <input
               type="text"
-              placeholder="Diagnosis"
+              placeholder="Additional Notes"
               value={dx}
-              onChange={(e) => setDx(e.target.value)}
+              onChange={(e) => setClien(e.target.value)}
             /> */}
           </div>
           <div className="modal__btns">
