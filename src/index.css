@@ -22,8 +22,14 @@ button {
   font-family: 'Urbanist', sans-serif;
   font-weight: bold;
   letter-spacing: 0.5px;
-  padding-top: 1.5em;
-  padding-bottom: 1.5em;
+  /* padding-top: 1.5em;
+  padding-bottom: 1.5em; */
+  padding: 1.5em 1.75em;
+  font-size: 16px;
+}
+
+input {
+  /* font-size: 16px; */
 }
 
 code {

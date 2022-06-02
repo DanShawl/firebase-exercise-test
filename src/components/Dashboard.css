@@ -14,7 +14,7 @@ header {
 }
 
 .btn__addClient {
-  width: 115px;
+  /* width: 115px; */
   height: 30px;
   background-color: rgb(64, 138, 248);
   color: white;
@@ -237,6 +237,12 @@ ul:first-child {
 
 .noClient__container > h2 {
   margin-bottom: 2rem;
+}
+
+.noClient__overview {
+  margin: 3em 1em;
+  text-align: center;
+  /* margin-top: 5em; */
 }
 
 .clients__container {

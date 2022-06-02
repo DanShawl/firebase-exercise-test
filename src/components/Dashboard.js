@@ -40,6 +40,20 @@ const Dashboard = ({ currentUser, handleLogout }) => {
   const [currentClient, setCurrentClient] = useState('');
   const [dx, setDx] = useState('');
   const [clientName, setClientName] = useState('');
+  // const months = [
+  //   'January',
+  //   'February',
+  //   'March',
+  //   'April',
+  //   'May',
+  //   'June',
+  //   'July',
+  //   'August',
+  //   'September',
+  //   'October',
+  //   'November',
+  //   'December',
+  // ];
 
   if (currentClient) {
     const getName = async () => {
@@ -231,27 +245,28 @@ const Dashboard = ({ currentUser, handleLogout }) => {
             </ul>
           </div>
         ) : (
-          <div className="noClient__container">
-            <h2>Start creating workouts by adding a client.</h2>
-            <button
-              className="btn__addClient"
-              onClick={() => setOpenModal(true)}
-            >
-              <AddIcon fontSize="small" />
-              <span>Add Client</span>
-            </button>
-          </div>
-          // <WorkoutList
-          // // firstName={firstName}
+          <div className="">
+            <div className="noClient__container">
+              <h2>Start creating workouts by adding a client.</h2>
+              <button
+                className="btn__addClient"
+                onClick={() => setOpenModal(true)}
+              >
+                <AddIcon fontSize="small" />
+                <span>Add Client</span>
+              </button>
+            </div>
 
-          // // lastName={lastName}
-          // // setLastName={setLastName}
-          // // email={email}
-          // // setEmail={setEmail}
-          // // dx={dx}
-          // // setDx={setDx}
-          // // addClient={addClient}
-          // />
+            <p className="noClient__overview">
+              This is your dashboard. Here, you're able to view a full list of
+              your client's, as well a brief overview of each.
+            </p>
+
+            {/* <p>
+              If you signed in anonymously, and would like to create a real
+              account, click here to start.
+            </p> */}
+          </div>
         )
       ) : (
         // <div>Exercise List</div>

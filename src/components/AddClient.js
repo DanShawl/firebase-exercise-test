@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AddClient.css';
+import CloseIcon from '@mui/icons-material/Close';
 
 const AddClient = ({
   closeModal,
@@ -19,8 +20,7 @@ const AddClient = ({
         <div className="modal__header">
           <h2>Add Client</h2>
           <button className="close__btn" onClick={() => closeModal(false)}>
-            {' '}
-            x{' '}
+            <CloseIcon />
           </button>
         </div>
         <form action="">

@@ -39,7 +39,7 @@ const Login = ({
             <input
               placeholder="Username"
               type="text"
-              autoFocus
+              // autoFocus
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
