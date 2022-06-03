@@ -1,8 +1,12 @@
 .dashboard {
-  /* margin: 1em; */
+  margin-bottom: 5rem;
 }
 
 header {
+  position: sticky;
+  background: #fff;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;

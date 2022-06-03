@@ -56,7 +56,7 @@ const AddClient = ({
             <textarea
               type="text"
               name=""
-              placeholder="Notes"
+              placeholder="Evaluation Notes"
               id=""
               cols="30"
               rows="6"

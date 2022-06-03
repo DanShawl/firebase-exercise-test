@@ -21,6 +21,8 @@ import {
   getDoc,
 } from 'firebase/firestore';
 import InputModal from './InputModal';
+import InfoBox from './InfoBox';
+import WorkoutItem from './WorkoutItem';
 
 //  Data needed:
 //    1.  Current client name / currentUser
@@ -43,6 +45,9 @@ const WorkoutList = ({
   const [dx, setDx] = useState('');
   const [firstName, setFirstName] = useState('');
   const [clientNote, setClientNote] = useState('');
+  const infoTitle = 'Client Overview';
+  const infoDx = 'Diagnosis';
+  const infoEval = 'Evaluation';
 
   // const [month, setMonth] = useState('');
 
@@ -68,6 +73,14 @@ const WorkoutList = ({
 
   // }, []);
 
+  const clientRef = doc(db, `users/${currentUser}/clients/${currentClient}`);
+
+  const workoutsCollectionRef = collection(
+    db,
+    `users/${currentUser}/clients/${currentClient}/workouts`
+  );
+  const [workouts, setWorkouts] = useState([]);
+
   const createWorkout = async (e) => {
     e.preventDefault();
 
@@ -77,18 +90,11 @@ const WorkoutList = ({
       // timestamp:
     });
     setOpenInput(false);
+    setWorkoutTitle('');
   };
 
   // const [clientRef, setClientRef] = useState({});
   // const [workouts, setWorkouts] = useState([]);
-
-  const clientRef = doc(db, `users/${currentUser}/clients/${currentClient}`);
-
-  const workoutsCollectionRef = collection(
-    db,
-    `users/${currentUser}/clients/${currentClient}/workouts`
-  );
-  const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
     const getWorkouts = async () => {
@@ -110,7 +116,6 @@ const WorkoutList = ({
     getClientData();
   }, []);
 
-  console.log(firstName);
   // useEffect(
   //   () =>
   //     onSnapshot(
@@ -171,7 +176,7 @@ const WorkoutList = ({
   // let id = useParams();
 
   return (
-    <div>
+    <div className="workout__list">
       {openInput && (
         <InputModal
           inputValue={workoutTitle}
@@ -182,6 +187,13 @@ const WorkoutList = ({
           createFunction={createWorkout}
         />
       )}
+      <InfoBox
+        infoTitle={infoTitle}
+        infoSubTitle={infoDx}
+        infoSubTitle2={infoEval}
+        infoData={dx}
+        infoData2={clientNote}
+      />
       {!workouts.length ? (
         <div className="">
           <div className="noClient__container">
@@ -196,17 +208,20 @@ const WorkoutList = ({
             </button>
           </div>
         </div>
-      ) : null}
+      ) : (
+        workouts.map((workout) => (
+          <WorkoutItem
+            title={workout.title}
+            dateOfWorkout={workout.timestamp}
+          />
+        ))
+      )}
       {/* <h1>{currentClient}</h1> */}
 
       {/* <button onClick={addWorkout}> Add a workout</button> */}
-      {workouts.map((workout) => (
-        <div>
-          <h2>{workout.title}</h2>
-          {/* {console.log(workout.serverTimestamp)} */}
-          {/* {console.log(workout.timestamp.toDate())} */}
-        </div>
-      ))}
+      {/* {workouts.map((workout) => (
+        <WorkoutItem title={workout.title} />
+      ))} */}
       {/* {workouts.map((workout) => (
         <div>
           <h2>{workout.data().workoutName}</h2>
@@ -220,9 +235,6 @@ const WorkoutList = ({
        
       </button> */}
       <button onClick={() => setCurrentClient('')}>Go Back</button>
-      {/*  */}
-      {/*  */}
-      {/*  */}
     </div>
   );
 };
