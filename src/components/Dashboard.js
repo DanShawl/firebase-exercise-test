@@ -170,7 +170,7 @@ const Dashboard = ({ currentUser, handleLogout }) => {
       <header>
         <h1>{!currentClient ? 'Dashboard' : clientName}</h1>
         <div className="dashboard__btns">
-          {!currentClient ? (
+          {!currentClient && clients.length ? (
             <button
               className="btn__addClient btn__addClient-fixed"
               onClick={() => setOpenModal(true)}
