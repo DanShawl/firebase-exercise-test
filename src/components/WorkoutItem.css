@@ -1,3 +1,18 @@
 .workout__card {
-  margin: 2rem 1.25rem;
+  margin: 1.25rem 1rem;
+  background: rgba(225, 237, 255, 0.733);
+  border: 1px solid rgb(138, 185, 255);
+  border-radius: 3px;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workout__card-info h2 {
+  margin-bottom: 0.5em;
+}
+.workout__card-info p {
+  /* padding: 0.25em;
+  background-color: aqua; */
 }

@@ -7,7 +7,7 @@ import { db, auth } from '../firebase';
 //   Link,
 //   useParams,
 // } from 'react-router-dom';
-
+import './WorkoutList.css';
 import {
   collection,
   onSnapshot,
@@ -23,6 +23,8 @@ import {
 import InputModal from './InputModal';
 import InfoBox from './InfoBox';
 import WorkoutItem from './WorkoutItem';
+import AddIcon from '@mui/icons-material/Add';
+import { ChevronLeft } from '@mui/icons-material';
 
 //  Data needed:
 //    1.  Current client name / currentUser
@@ -80,17 +82,22 @@ const WorkoutList = ({
     `users/${currentUser}/clients/${currentClient}/workouts`
   );
   const [workouts, setWorkouts] = useState([]);
+  // console.log(workouts);
 
   const createWorkout = async (e) => {
     e.preventDefault();
+    // const workoutsCollectionRef = collection(
+    //   db,
+    //   `users/${currentUser}/clients/${currentClient}/workouts`
+    // );
 
     await addDoc(workoutsCollectionRef, {
       title: workoutTitle,
-      serverTimestamp: serverTimestamp(),
-      // timestamp:
+      timestamp: serverTimestamp(),
     });
     setOpenInput(false);
     setWorkoutTitle('');
+    // console.log(timestamp);
   };
 
   // const [clientRef, setClientRef] = useState({});
@@ -102,7 +109,25 @@ const WorkoutList = ({
       setWorkouts(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
     getWorkouts();
-  }, []);
+  }, [db]);
+
+  // useEffect(() => {
+  //   if (currentClient) {
+  //     onSnapshot(
+  //       query(getDocs(db, workoutsCollectionRef), orderBy('timestamp', 'desc')),
+  //       (snapshot) => {
+  //         setWorkouts(
+  //           snapshot.docs.map((doc) => ({
+  //             id: doc.id,
+  //             workout: doc.data(),
+  //             // firstName: doc.data().eval.firstName,
+  //             // lastName: doc.data().eval.lastName,
+  //           }))
+  //         );
+  //       }
+  //     );
+  //   }
+  // }, [currentClient]);
 
   useEffect(() => {
     const getClientData = async () => {
@@ -177,6 +202,10 @@ const WorkoutList = ({
 
   return (
     <div className="workout__list">
+      <div className="workout__list-nav" onClick={() => setCurrentClient('')}>
+        <ChevronLeft />
+        <p>Client List</p>
+      </div>
       {openInput && (
         <InputModal
           inputValue={workoutTitle}
@@ -194,6 +223,13 @@ const WorkoutList = ({
         infoData={dx}
         infoData2={clientNote}
       />
+
+      {!openInput ? (
+        <button className="add__workout-btn">
+          <AddIcon onClick={() => setOpenInput(true)} />
+        </button>
+      ) : null}
+
       {!workouts.length ? (
         <div className="">
           <div className="noClient__container">
@@ -234,7 +270,7 @@ const WorkoutList = ({
       <button onClick={(e) => setCurrentClient(null)}>
        
       </button> */}
-      <button onClick={() => setCurrentClient('')}>Go Back</button>
+      {/* <button onClick={() => setCurrentClient('')}>Go Back</button> */}
     </div>
   );
 };
